@@ -12,6 +12,11 @@
 		<springboot.version>0.5.0.M7</springboot.version>
 	</properties>
 
+<!-- 	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>0.5.0.M7</version>
+	</parent> -->
 
 	<!-- Add typical dependencies for a web application -->
 	<dependencies>
@@ -25,11 +30,14 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 			<version>${springboot.version}</version>
 		</dependency>
-		<dependency>
+		
+		<!-- Comment this out and a sun.reflect.annotation.TypeNotPresentExceptionProxy exception occurs -->
+        <dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>4.0.0.RELEASE</version>
-		</dependency>		
+		</dependency>	
+			
 		<dependency>
 			<groupId>com.mysema.querydsl</groupId>
 			<artifactId>querydsl-jpa</artifactId>
