@@ -14,6 +14,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @JsonIgnoreProperties("new")
 public class Team extends AbstractPersistable<Long> {
+
+	private static final long serialVersionUID = 1L;
+
 	private String name;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "team", orphanRemoval = true)
