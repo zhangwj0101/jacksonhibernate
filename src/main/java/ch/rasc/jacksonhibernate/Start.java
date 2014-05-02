@@ -28,8 +28,8 @@ public class Start {
 	@Bean
 	public Hibernate4Module Hibernate4Module() {
 		Hibernate4Module hibernate4Module = new Hibernate4Module();
-		//hibernate4Module.enable(Hibernate4Module.Feature.FORCE_LAZY_LOADING);
-		hibernate4Module.disable(Hibernate4Module.Feature.FORCE_LAZY_LOADING);
+		hibernate4Module.enable(Hibernate4Module.Feature.FORCE_LAZY_LOADING);
+		//hibernate4Module.disable(Hibernate4Module.Feature.FORCE_LAZY_LOADING);
 		return hibernate4Module;
 	}
 
