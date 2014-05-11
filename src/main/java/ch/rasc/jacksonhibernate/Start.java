@@ -15,7 +15,7 @@ import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 @EnableAutoConfiguration
 @ComponentScan
 public class Start {
-	
+
 	@Bean
 	public ObjectMapper objectMapper() {
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -24,12 +24,12 @@ public class Start {
 		objectMapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
 		return objectMapper;
 	}
-	
+
 	@Bean
 	public Hibernate4Module Hibernate4Module() {
 		Hibernate4Module hibernate4Module = new Hibernate4Module();
 		hibernate4Module.enable(Hibernate4Module.Feature.FORCE_LAZY_LOADING);
-		//hibernate4Module.disable(Hibernate4Module.Feature.FORCE_LAZY_LOADING);
+		// hibernate4Module.disable(Hibernate4Module.Feature.FORCE_LAZY_LOADING);
 		return hibernate4Module;
 	}
 

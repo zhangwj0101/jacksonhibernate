@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@JsonIgnoreProperties({"new"})
+@JsonIgnoreProperties({ "new" })
 public class Player extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = 1L;

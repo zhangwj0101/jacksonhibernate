@@ -1,4 +1,5 @@
 package ch.rasc.jacksonhibernate;
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -20,21 +21,21 @@ public class SampleController {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-	
-    @RequestMapping("/")
-    String home() {
-        return "Hello World!";
-    }
 
-    @RequestMapping("/players")
-    @Transactional(readOnly=true)
-    List<Player> players() {
-       return new JPAQuery(entityManager).from(QPlayer.player).list(QPlayer.player);
-    }
+	@RequestMapping("/")
+	String home() {
+		return "Hello World!";
+	}
 
-    @RequestMapping("/teams")
-    @Transactional(readOnly=true)
-    List<Team> teams() {
-       return new JPAQuery(entityManager).from(QTeam.team).list(QTeam.team);
-    }
+	@RequestMapping("/players")
+	@Transactional(readOnly = true)
+	List<Player> players() {
+		return new JPAQuery(entityManager).from(QPlayer.player).list(QPlayer.player);
+	}
+
+	@RequestMapping("/teams")
+	@Transactional(readOnly = true)
+	List<Team> teams() {
+		return new JPAQuery(entityManager).from(QTeam.team).list(QTeam.team);
+	}
 }
