@@ -9,10 +9,7 @@ import javax.persistence.OneToMany;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 @Entity
-@JsonIgnoreProperties("new")
 public class Team extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = 1L;

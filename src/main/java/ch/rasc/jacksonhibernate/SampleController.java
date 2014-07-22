@@ -2,25 +2,27 @@ package ch.rasc.jacksonhibernate;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.rasc.jacksonhibernate.domain.Player;
-import ch.rasc.jacksonhibernate.domain.QPlayer;
-import ch.rasc.jacksonhibernate.domain.QTeam;
 import ch.rasc.jacksonhibernate.domain.Team;
-
-import com.mysema.query.jpa.impl.JPAQuery;
+import ch.rasc.jacksonhibernate.repository.PlayerRepository;
+import ch.rasc.jacksonhibernate.repository.TeamRepository;
 
 @RestController
 public class SampleController {
 
-	@PersistenceContext
-	private EntityManager entityManager;
+	private final PlayerRepository playerRepository;
+	private final TeamRepository teamRepository;
+
+	@Autowired
+	public SampleController(PlayerRepository playerRepository,
+			TeamRepository teamRepository) {
+		this.playerRepository = playerRepository;
+		this.teamRepository = teamRepository;
+	}
 
 	@RequestMapping("/")
 	String home() {
@@ -28,14 +30,13 @@ public class SampleController {
 	}
 
 	@RequestMapping("/players")
-	@Transactional(readOnly = true)
 	List<Player> players() {
-		return new JPAQuery(entityManager).from(QPlayer.player).list(QPlayer.player);
+		return playerRepository.findAll();
 	}
 
 	@RequestMapping("/teams")
-	@Transactional(readOnly = true)
 	List<Team> teams() {
-		return new JPAQuery(entityManager).from(QTeam.team).list(QTeam.team);
+		return teamRepository.findAll();
 	}
+
 }
