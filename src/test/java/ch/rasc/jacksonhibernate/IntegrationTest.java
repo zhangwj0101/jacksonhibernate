@@ -54,7 +54,7 @@ public class IntegrationTest {
 		assertThat(json).hasSize(7);
 
 		for (int i = 0; i < 7; i++) {
-			assertThat(json.get(i)).contains(MapEntry.entry("id", (i + 1)));
+			assertThat(json.get(i)).contains(MapEntry.entry("id", i + 1));
 		}
 
 	}
@@ -82,13 +82,14 @@ public class IntegrationTest {
 		assertThat(json.get(1)).contains(MapEntry.entry("id", 2));
 		assertThat(json.get(2)).contains(MapEntry.entry("id", 3));
 
-		List<Map<String,Object>> players = (List<Map<String,Object>>) json.get(0).get("player");		
+		List<Map<String, Object>> players = (List<Map<String, Object>>) json.get(0).get(
+				"player");
 		assertThat(players).hasSize(3);
-		
-		players = (List<Map<String,Object>>) json.get(1).get("player");		
+
+		players = (List<Map<String, Object>>) json.get(1).get("player");
 		assertThat(players).hasSize(2);
-		
-		players = (List<Map<String,Object>>) json.get(2).get("player");		
+
+		players = (List<Map<String, Object>>) json.get(2).get("player");
 		assertThat(players).hasSize(2);
 	}
 }
