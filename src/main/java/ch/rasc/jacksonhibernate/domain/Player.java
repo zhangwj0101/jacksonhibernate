@@ -6,9 +6,17 @@ import javax.persistence.ManyToOne;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import ch.rasc.jacksonhibernate.PlayerIdResoler;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIgnoreProperties("new")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "id", resolver = PlayerIdResoler.class, scope = Player.class)
 public class Player extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = 1L;
@@ -19,11 +27,11 @@ public class Player extends AbstractPersistable<Long> {
 
 	@ManyToOne
 	@JoinColumn(name = "teamId", nullable = false)
-	@JsonIgnore
+	@JsonIdentityReference(alwaysAsId = true)
 	private Team team;
 
 	public String getLastName() {
-		return lastName;
+		return this.lastName;
 	}
 
 	public void setLastName(String lastName) {
@@ -31,7 +39,7 @@ public class Player extends AbstractPersistable<Long> {
 	}
 
 	public String getFirstName() {
-		return firstName;
+		return this.firstName;
 	}
 
 	public void setFirstName(String firstName) {
@@ -39,7 +47,7 @@ public class Player extends AbstractPersistable<Long> {
 	}
 
 	public Team getTeam() {
-		return team;
+		return this.team;
 	}
 
 	public void setTeam(Team team) {

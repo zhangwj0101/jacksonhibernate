@@ -17,17 +17,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Start.class)
-@WebAppConfiguration
-@org.springframework.boot.test.IntegrationTest("server.port:0")
-@DirtiesContext
+@WebIntegrationTest({ "server.port=0" })
 public class IntegrationTest {
 
 	@Value("${local.server.port}")
@@ -39,7 +36,7 @@ public class IntegrationTest {
 	public void testPlayers() throws Exception {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 
-		HttpGet httpget = new HttpGet("http://localhost:" + port + "/players");
+		HttpGet httpget = new HttpGet("http://localhost:" + this.port + "/players");
 		CloseableHttpResponse response = httpclient.execute(httpget);
 		HttpEntity entity = response.getEntity();
 
@@ -64,7 +61,7 @@ public class IntegrationTest {
 
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 
-		HttpGet httpget = new HttpGet("http://localhost:" + port + "/teams");
+		HttpGet httpget = new HttpGet("http://localhost:" + this.port + "/teams");
 		CloseableHttpResponse response = httpclient.execute(httpget);
 		HttpEntity entity = response.getEntity();
 

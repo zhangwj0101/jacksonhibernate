@@ -9,7 +9,15 @@ import javax.persistence.OneToMany;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
+@JsonIgnoreProperties("new")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "id", scope = Team.class)
 public class Team extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = 1L;
@@ -17,10 +25,11 @@ public class Team extends AbstractPersistable<Long> {
 	private String name;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "team", orphanRemoval = true)
+	@JsonIdentityReference(alwaysAsId = true)
 	private Set<Player> player = new HashSet<>();
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -28,7 +37,7 @@ public class Team extends AbstractPersistable<Long> {
 	}
 
 	public Set<Player> getPlayer() {
-		return player;
+		return this.player;
 	}
 
 	public void setPlayer(Set<Player> player) {
