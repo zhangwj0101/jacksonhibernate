@@ -2,22 +2,25 @@ package ch.rasc.jacksonhibernate;
 
 import javax.persistence.EntityManager;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import ch.rasc.jacksonhibernate.domain.Player;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import com.fasterxml.jackson.annotation.ObjectIdGenerator.IdKey;
 import com.fasterxml.jackson.annotation.ObjectIdResolver;
 
-@Component
-public class PlayerIdResoler implements ObjectIdResolver {
+public class EntityIdResolver implements ObjectIdResolver {
 
 	private final EntityManager entityManager;
 
-	@Autowired
-	public PlayerIdResoler(EntityManager entityManager) {
+	private final Class<?> entityClass;
+
+	private final TransactionTemplate transactionTemplate;
+
+	public EntityIdResolver(EntityManager entityManager,
+			PlatformTransactionManager transactionManager, Class<?> entityClass) {
 		this.entityManager = entityManager;
+		this.entityClass = entityClass;
+		this.transactionTemplate = new TransactionTemplate(transactionManager);
 	}
 
 	@Override
@@ -27,7 +30,8 @@ public class PlayerIdResoler implements ObjectIdResolver {
 
 	@Override
 	public Object resolveId(IdKey id) {
-		return this.entityManager.find(Player.class, id.key);
+		return this.transactionTemplate.execute(t -> this.entityManager.find(
+				this.entityClass, id.key));
 	}
 
 	@Override

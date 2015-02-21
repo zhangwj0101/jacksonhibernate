@@ -1,12 +1,13 @@
 package ch.rasc.jacksonhibernate;
 
+import javax.persistence.EntityManager;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.converter.json.SpringHandlerInstantiator;
-import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import com.fasterxml.jackson.annotation.ObjectIdResolver;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -19,7 +20,8 @@ import com.fasterxml.jackson.databind.introspect.Annotated;
 public class Start {
 
 	@Bean
-	public ObjectMapper objectMapper(ApplicationContext ctx) {
+	public ObjectMapper objectMapper(ApplicationContext ctx, EntityManager entityManager,
+			PlatformTransactionManager transactionManager) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 		objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
@@ -30,23 +32,25 @@ public class Start {
 			@Override
 			public ObjectIdResolver resolverIdGeneratorInstance(MapperConfig<?> config,
 					Annotated annotated, Class<?> implClass) {
-				if (AnnotationUtils.findAnnotation(implClass, Component.class) != null) {
-					return (ObjectIdResolver) ctx.getAutowireCapableBeanFactory()
-							.createBean(implClass);
+				if (implClass == EntityIdResolver.class) {
+					System.out.println(annotated.getRawType());
+					return new EntityIdResolver(entityManager, transactionManager,
+							annotated.getRawType());
 				}
 				return null;
 			}
 
 		});
 
+		// objectMapper.registerModule(hibernate4Module());
+
 		return objectMapper;
 	}
 
-	// @Bean
-	// public Hibernate4Module Hibernate4Module() {
+	// public Hibernate4Module hibernate4Module() {
 	// Hibernate4Module hibernate4Module = new Hibernate4Module();
 	// hibernate4Module.enable(Hibernate4Module.Feature.FORCE_LAZY_LOADING);
-	// // hibernate4Module.disable(Hibernate4Module.Feature.FORCE_LAZY_LOADING);
+	// //hibernate4Module.disable(Hibernate4Module.Feature.FORCE_LAZY_LOADING);
 	// return hibernate4Module;
 	// }
 
