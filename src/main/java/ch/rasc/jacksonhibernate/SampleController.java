@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ch.rasc.jacksonhibernate.domain.Player;
 import ch.rasc.jacksonhibernate.domain.Team;
 import ch.rasc.jacksonhibernate.repository.PlayerRepository;
 import ch.rasc.jacksonhibernate.repository.TeamRepository;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 public class SampleController {
@@ -47,8 +47,8 @@ public class SampleController {
 	}
 
 	@RequestMapping("/testTeam")
-	public void deserializeTeam() throws JsonParseException, JsonMappingException,
-			IOException {
+	public void deserializeTeam()
+			throws JsonParseException, JsonMappingException, IOException {
 		String json = "{\"id\" : 1,\"name\" : \"Team A\",\"player\" : [ 1, 7, 4 ]}";
 		Team team = this.objectMapper.readValue(json, Team.class);
 		System.out.println(team);

@@ -30,8 +30,8 @@ public class EntityIdResolver implements ObjectIdResolver {
 
 	@Override
 	public Object resolveId(IdKey id) {
-		return this.transactionTemplate.execute(t -> this.entityManager.find(
-				this.entityClass, id.key));
+		return this.transactionTemplate
+				.execute(t -> this.entityManager.find(this.entityClass, id.key));
 	}
 
 	@Override

@@ -27,20 +27,21 @@ public class Start {
 		objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		objectMapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
 
-		objectMapper.setHandlerInstantiator(new SpringHandlerInstantiator(ctx
-				.getAutowireCapableBeanFactory()) {
-			@Override
-			public ObjectIdResolver resolverIdGeneratorInstance(MapperConfig<?> config,
-					Annotated annotated, Class<?> implClass) {
-				if (implClass == EntityIdResolver.class) {
-					System.out.println(annotated.getRawType());
-					return new EntityIdResolver(entityManager, transactionManager,
-							annotated.getRawType());
-				}
-				return null;
-			}
+		objectMapper.setHandlerInstantiator(
+				new SpringHandlerInstantiator(ctx.getAutowireCapableBeanFactory()) {
+					@Override
+					public ObjectIdResolver resolverIdGeneratorInstance(
+							MapperConfig<?> config, Annotated annotated,
+							Class<?> implClass) {
+						if (implClass == EntityIdResolver.class) {
+							System.out.println(annotated.getRawType());
+							return new EntityIdResolver(entityManager, transactionManager,
+									annotated.getRawType());
+						}
+						return null;
+					}
 
-		});
+				});
 
 		// objectMapper.registerModule(hibernate4Module());
 

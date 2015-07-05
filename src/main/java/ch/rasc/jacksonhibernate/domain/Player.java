@@ -6,17 +6,17 @@ import javax.persistence.ManyToOne;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import ch.rasc.jacksonhibernate.EntityIdResolver;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import ch.rasc.jacksonhibernate.EntityIdResolver;
+
 @Entity
 @JsonIgnoreProperties("new")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-		property = "id", resolver = EntityIdResolver.class, scope = Player.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
+		resolver = EntityIdResolver.class, scope = Player.class)
 public class Player extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = 1L;

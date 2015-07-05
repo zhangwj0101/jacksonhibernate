@@ -42,8 +42,8 @@ public class IntegrationTest {
 
 		assertThat(response.getStatusLine().getStatusCode()).isEqualTo(200);
 		ContentType contentType = ContentType.get(entity);
-		assertThat(contentType.getMimeType()).isEqualTo(
-				ContentType.APPLICATION_JSON.getMimeType());
+		assertThat(contentType.getMimeType())
+				.isEqualTo(ContentType.APPLICATION_JSON.getMimeType());
 
 		String body = EntityUtils.toString(entity);
 		ObjectMapper mapper = new ObjectMapper();
@@ -67,8 +67,8 @@ public class IntegrationTest {
 
 		assertThat(response.getStatusLine().getStatusCode()).isEqualTo(200);
 		ContentType contentType = ContentType.get(entity);
-		assertThat(contentType.getMimeType()).isEqualTo(
-				ContentType.APPLICATION_JSON.getMimeType());
+		assertThat(contentType.getMimeType())
+				.isEqualTo(ContentType.APPLICATION_JSON.getMimeType());
 
 		String body = EntityUtils.toString(entity);
 		ObjectMapper mapper = new ObjectMapper();
@@ -79,8 +79,8 @@ public class IntegrationTest {
 		assertThat(json.get(1)).contains(MapEntry.entry("id", 2));
 		assertThat(json.get(2)).contains(MapEntry.entry("id", 3));
 
-		List<Map<String, Object>> players = (List<Map<String, Object>>) json.get(0).get(
-				"player");
+		List<Map<String, Object>> players = (List<Map<String, Object>>) json.get(0)
+				.get("player");
 		assertThat(players).hasSize(3);
 
 		players = (List<Map<String, Object>>) json.get(1).get("player");

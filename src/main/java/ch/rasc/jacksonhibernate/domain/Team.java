@@ -16,8 +16,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @JsonIgnoreProperties("new")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-		property = "id", scope = Team.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
+		scope = Team.class)
 public class Team extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = 1L;
